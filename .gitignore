@@ -216,3 +216,6 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+# Streamlit creates a virtual environment in the .streamlit directory, just like venv module creates one
+# in the .venv directory. It is recommended not to include this directory in version control
+media/

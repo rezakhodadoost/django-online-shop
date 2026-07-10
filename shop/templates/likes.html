@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+<div class="card-container">
+
+    <h2 class="likes-title">
+        ❤️ My Likes
+    </h2>
+
+
+    {% for product in products %}
+
+    <div class="card">
+
+        <a href="{% url 'product_detail' product.pk %}">
+
+            {% if product.image %}
+
+                <img 
+                src="{{ product.image.url }}" 
+                alt="{{ product.name }}"
+                class="product-image">
+
+            {% else %}
+
+                <img 
+                src="{% static 'image/images.png' %}"
+                class="product-image">
+
+            {% endif %}
+
+
+            <div class="card-body">
+
+                <h2>
+                    {{ product.name }}
+                </h2>
+
+
+                <p>
+                    {{ product.description|truncatewords:20 }}
+                </p>
+
+
+                <h3>
+                    ${{ product.price }}
+                </h3>
+
+            </div>
+
+        </a>
+
+
+        <form method="post" action="{% url 'like_product' product.pk %}">
+            {% csrf_token %}
+
+            <button class="unlike-btn">
+                💔 Remove Like
+            </button>
+
+        </form>
+
+
+    </div>
+
+
+    {% empty %}
+
+        <div class="empty-likes">
+
+            <h2>
+                No liked products yet ❤️
+            </h2>
+
+            <a href="{% url 'home' %}">
+                Explore Products
+            </a>
+
+        </div>
+
+
+    {% endfor %}
+
+
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+
+<h2>Shopping Cart</h2>
+
+{% if products %}
+
+<table class="cart-table">
+    <thead>
+        <tr>
+            <th>Picture</th>
+            <th>Product</th>
+            <th>Quantity</th>
+            <th>Subtotal</th>
+            <th>Price</th>
+            <th>Remove</th>
+        </tr>
+    </thead>
+
+    <tbody>
+    {% for item in products %}
+    <tr>
+
+        <td>
+            {% if item.product.image %}
+                <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}" class="product-image">
+            {% else %}
+                <img src="{% static 'image/images.png' %}" alt="No image" class="product-image">
+            {% endif %}
+        </td>
+
+        <td>{{ item.product.name }}</td>
+        <td>${{ item.product.price }}</td>
+        <td>{{ item.quantity }}</td>
+        <td>${{ item.subtotal }}</td>
+        <td>
+            
+
+            <form method="post" action="{% url 'remove_from_cart' item.product.id %}">
+                {% csrf_token %}
+                <button type="submit" class="remove-btn">Remove</button>
+            </form>
+   
+        </td>
+
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<h3>Total: ${{ total }}</h3>
+
+{% else %}
+
+<p>Your shopping cart is empty.</p>
+
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+
+
+<div class="search-container">
+
+    <h2 class="search-title">
+        Search Results
+    </h2>
+
+
+    {% if products %}
+
+    <div class="product-grid">
+
+        {% for product in products %}
+
+        <div class="product-card">
+
+            {% if product.image %}
+                <img src="{{ product.image.url }}" alt="{{ product.name }}">
+            {% endif %}
+
+            <h3>{{ product.name }}</h3>
+
+            <p class="product-price">
+                {{ product.price }} $
+            </p>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+    {% else %}
+
+        <p class="no-result">
+            No products found.
+        </p>
+
+    {% endif %}
+
+</div>
+{% endblock %}
